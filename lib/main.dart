@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import './common/root_page.dart';
 
-void main() => runApp(const MyApp());
+import 'common/global.dart';
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -21,7 +27,7 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter in Uni'),
     );
   }
 }
@@ -44,7 +50,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends RootPageState<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -56,10 +62,16 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+    uniapp.$emit('change', {'value': _counter});
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initParams(Map<String, dynamic> params) {
+    print(params);
+  }
+
+  @override
+  Widget render(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
